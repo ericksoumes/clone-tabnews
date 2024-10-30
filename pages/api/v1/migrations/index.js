@@ -32,5 +32,11 @@ export default async function migrations(request, response) {
     return response.status(200).json(migratedMigrations);
   }
 
+  if (request.method === "DELETE") {
+    const pendiongMigrations = await migrationRunner(defaultMigrationOptions);
+    await dbClient.end();
+    return response.status(200).json(pendiongMigrations);
+  }
+
   return response.status(405).end();
 }
