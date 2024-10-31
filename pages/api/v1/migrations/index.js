@@ -5,16 +5,16 @@ import database from "infra/database.js";
 export default async function migrations(request, response) {
   const allowedMethods = ["GET", "POST"];
   if (!allowedMethods.includes(request.method)) {
-    return response
-      .status(405)
-      .end()
-      .json({
-        error: `Method "${request.method}" not allowed`,
-      });
+    return response.status(405).json({
+      error: `Method "${request.method}" not allowed`,
+    });
   }
+
   let dbClient;
+
   try {
     dbClient = await database.getNewClient();
+
     const defaultMigrationOptions = {
       dbClient: dbClient,
       dryRun: true,
@@ -23,9 +23,10 @@ export default async function migrations(request, response) {
       verbose: true,
       migrationsTable: "pgmigrations",
     };
+
     if (request.method === "GET") {
-      const pendiongMigrations = await migrationRunner(defaultMigrationOptions);
-      return response.status(200).json(pendiongMigrations);
+      const pendingMigrations = await migrationRunner(defaultMigrationOptions);
+      return response.status(200).json(pendingMigrations);
     }
 
     if (request.method === "POST") {
@@ -37,10 +38,11 @@ export default async function migrations(request, response) {
       if (migratedMigrations.length > 0) {
         return response.status(201).json(migratedMigrations);
       }
+
       return response.status(200).json(migratedMigrations);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   } finally {
     await dbClient.end();
