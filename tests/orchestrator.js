@@ -4,7 +4,7 @@ import migrator from "models/migrator";
 import user from "models/user.js";
 import { faker } from "@faker-js/faker/.";
 
-async function waitFotAllServices() {
+async function waitForAllServices() {
   await waitForWebServer();
 
   async function waitForWebServer() {
@@ -41,7 +41,7 @@ async function createUser(ObjectUser) {
 }
 
 const orchestrator = {
-  waitFotAllServices,
+  waitForAllServices,
   clearDatabase,
   runPendingMigrations,
   createUser,
