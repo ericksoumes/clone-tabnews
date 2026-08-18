@@ -2,7 +2,7 @@ const nextConfig = {
   transpilePackages: ["node-pg-migrate"],
 
   outputFileTracingIncludes: {
-    "/api/v1/migrations": ["./infra/migrations/**/*"]
+    "/api/v1/migrations": ["./infra/migrations/**/*"],
   },
 };
 
