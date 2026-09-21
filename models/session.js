@@ -22,7 +22,7 @@ async function findOneValidByToken(sessionToken) {
         LIMIT
           1
       ;`,
-      values: [sessionToken]
+      values: [sessionToken],
     });
 
     if (results.rowCount === 0) {
@@ -80,7 +80,7 @@ async function renew(sessionId) {
           *
       ;`,
       values: [sessionId, expiresAt],
-    })
+    });
 
     return results.rows[0];
   }
